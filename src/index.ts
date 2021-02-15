@@ -22,16 +22,15 @@ const apiKey = apiKeys[Math.floor(Math.random() * apiKeys.length)];
 function buildUrl({
   featured,
   orientation,
-  search,
+  query,
   width,
   height,
-  random,
 }: Options): string {
   const orientation_ = orientation ? `&orientation=${orientation}` : "";
   const featured_ = featured ? "&featured" : "";
   const width_ = width ? `&w=${width}` : "";
   const height_ = height ? `&h=${height}` : "";
-  const search_ = search && random ? `&query=${search}` : "";
+  const query_ = query ? `&query=${query}` : "";
   return (
     `https://api.unsplash.com/photos/random?client_id=${apiKey}` +
     orientation_ +
@@ -39,7 +38,7 @@ function buildUrl({
     width_ +
     height_ +
     width_ +
-    search_
+    query_
   );
 }
 
@@ -76,7 +75,8 @@ async function exec() {
     width,
     height,
     orientation: "landscape",
-    search: QUERY,
+    query: QUERY,
+    featured: true,
   });
 
   console.log(`Downloaded metadata: ${metadata.alt_description}`);

@@ -1,9 +1,9 @@
 import metadata from '../src/example-metadata.json';
 
 export interface Options {
-  featured?: string,
+  featured?: boolean,
   orientation?: string,
-  search?: string,
+  query?: string,
   width?: number,
   height?: number,
   random?: string,
