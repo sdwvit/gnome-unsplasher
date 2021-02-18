@@ -62,11 +62,10 @@ function saveFile(where: string, data: Buffer) {
 }
 
 function setNewWallpaper(fileUri: string) {
-  spawn("gsettings", [
-    "set",
-    "org.gnome.desktop.background",
-    "picture-uri",
-    `file://${fileUri}`,
+  spawn("dconf", [
+    "write",
+    "/org/gnome/desktop/background/picture-uri",
+    `'file://${fileUri}'`,
   ]);
 }
 
@@ -87,7 +86,10 @@ async function exec() {
   const image: Buffer = await downloadNewWallpaper(metadata.urls.custom);
   const fileUri = path.join(
     SAVE_FILES_PATH,
-    `${metadata.alt_description.replace(/ /g, "_")}.jpg`
+    `${metadata.alt_description.replace(
+      /\s/g,
+      "-"
+    )}-by-${metadata.user.name.replace(/\s/g, "-")}.jpg`
   );
   saveFile(fileUri, image);
   setNewWallpaper(fileUri);
