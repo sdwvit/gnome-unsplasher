@@ -6,6 +6,8 @@ import fs from "fs";
 import path from "path";
 import { spawn } from "child_process";
 
+const log = (...data: string[]) => console.log(new Date(), ...data);
+
 dotenv.config();
 
 const SAVE_FILES_PATH = process.env.SAVE_FILES_PATH || process.env.HOME || "~";
@@ -46,19 +48,19 @@ async function downloadNewWallPaperMetadata(
   options: Options
 ): Promise<Metadata> {
   const url = buildUrl(options);
-  console.log(`Downloading ${url}`);
+  log(`Downloading ${url}`);
   const response = await fetch(url);
   return response.json();
 }
 
 async function downloadNewWallpaper(url: string): Promise<Buffer> {
-  console.log(`Downloading image from: ${url}`);
+  log(`Downloading image from: ${url}`);
   return (await fetch(url)).buffer();
 }
 
 function saveFile(where: string, data: Buffer) {
   fs.writeFileSync(where, data);
-  console.log(`Saved pic at: ${SAVE_FILES_PATH} as ${where}`);
+  log(`Saved pic at: ${SAVE_FILES_PATH} as ${where}`);
 }
 
 function setNewWallpaper(fileUri: string) {
@@ -78,7 +80,7 @@ async function exec() {
     featured: true,
   });
 
-  console.log(`Downloaded metadata: ${metadata.alt_description}`);
+  log(`Downloaded metadata: ${metadata.alt_description}`);
   if (!metadata) {
     return;
   }

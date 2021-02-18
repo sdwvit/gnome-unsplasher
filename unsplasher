@@ -1,2 +1,3 @@
-cd "$(dirname "$0")"
-npm start
+cd "$(dirname "$0")";
+node -e "console.log(new Date(), 'running unsplasher')" >> ./unsplasher.log;
+npm start &>> ./unsplasher.log & tail -f ./unsplasher.log
