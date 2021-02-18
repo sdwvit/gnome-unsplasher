@@ -4,3 +4,5 @@
 /node_modules/
 /src/index.js
 .idea
+*.log
+/unsplasher.log
