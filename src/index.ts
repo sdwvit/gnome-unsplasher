@@ -12,13 +12,10 @@ dotenv.config();
 
 const SAVE_FILES_PATH = process.env.SAVE_FILES_PATH || process.env.HOME || "~";
 const QUERY = process.env.QUERY || "";
+const HEIGHT = process.env.HEIGHT || height;
+const WIDTH = process.env.WIDTH || width;
 
-const apiKeys = [
-  "KU76e-L5LwjeOxB98AWi_NJ1BfnSe1bFQ1A7Aul9foA",
-  "ttUqGcFjnw_kag6oa9X-oM_9H5BSHFG32rFa9sIbwKs",
-  "HQtqmJS7bjUyzlWJd8D1EKSmugm6CNTlYul58-DVN3Q",
-  "fymYR5htky3PF1O4-P8YN4FqcpVim6lHd2S5bv79F5M",
-];
+const apiKeys = JSON.parse(process.env.API_KEYS || "") || [];
 const apiKey = apiKeys[Math.floor(Math.random() * apiKeys.length)];
 
 function buildUrl({
@@ -30,8 +27,8 @@ function buildUrl({
 }: Options): string {
   const orientation_ = orientation ? `&orientation=${orientation}` : "";
   const featured_ = featured ? "&featured" : "";
-  const width_ = width ? `&w=${width}` : "";
   const height_ = height ? `&h=${height}` : "";
+  const width_ = width ? `&w=${width}` : "";
   const query_ = query ? `&query=${query}` : "";
   return (
     `https://api.unsplash.com/photos/random?client_id=${apiKey}` +
@@ -73,8 +70,8 @@ function setNewWallpaper(fileUri: string) {
 
 async function exec() {
   const metadata: Metadata = await downloadNewWallPaperMetadata({
-    width,
-    height,
+    height: HEIGHT,
+    width: WIDTH,
     orientation: "landscape",
     query: QUERY,
     featured: true,

@@ -4,8 +4,8 @@ export interface Options {
   featured?: boolean,
   orientation?: string,
   query?: string,
-  width?: number,
-  height?: number,
+  width?: number | string,
+  height?: number | string,
   random?: string,
 }
 
